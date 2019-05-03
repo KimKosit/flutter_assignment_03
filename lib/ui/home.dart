@@ -50,11 +50,13 @@ class TodoScreenState extends State {
               return ListView.builder(
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (BuildContext context, int index) {
+                  int _id =
+                      snapshot.data.documents.elementAt(index).data['_id'];
                   String name =
                       snapshot.data.documents.elementAt(index).data['title'];
                   bool done =
-                      snapshot.data.documents.elementAt(index).data['dont'] ==
-                          0;
+                      snapshot.data.documents.elementAt(index).data['done'] ==
+                          1;
                   String docId =
                       snapshot.data.documents.elementAt(index).documentID;
                   return CheckboxListTile(
@@ -65,7 +67,7 @@ class TodoScreenState extends State {
                         _firestore
                             .collection('todo')
                             .document(docId)
-                            .setData({'title': name, 'done': 1});
+                            .setData({'_id': _id, 'title': name, 'done': 1});
                       });
                     },
                   );
@@ -81,10 +83,12 @@ class TodoScreenState extends State {
               return ListView.builder(
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (BuildContext context, int index) {
+                  int _id =
+                      snapshot.data.documents.elementAt(index).data['_id'];
                   String name =
                       snapshot.data.documents.elementAt(index).data['title'];
                   bool done =
-                      snapshot.data.documents.elementAt(index).data['dont'] !=
+                      snapshot.data.documents.elementAt(index).data['done'] !=
                           0;
                   String docId =
                       snapshot.data.documents.elementAt(index).documentID;
@@ -96,7 +100,7 @@ class TodoScreenState extends State {
                         _firestore
                             .collection('todo')
                             .document(docId)
-                            .setData({'title': name, 'done': 0});
+                            .setData({'_id': _id, 'title': name, 'done': 0});
                       });
                     },
                   );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+int _id = 0;
+
 class AddSubject extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -11,7 +13,7 @@ class AddSubject extends StatefulWidget {
 class AddSubjectState extends State<AddSubject> {
   final _formkey = GlobalKey<FormState>();
   TextEditingController inputName = TextEditingController();
-  Firestore _store = Firestore();
+  Firestore _firestore = Firestore();
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +42,32 @@ class AddSubjectState extends State<AddSubject> {
                       child: RaisedButton(
                         child: Text("Save"),
                         onPressed: () async {
+                          _id += 1;
                           if (_formkey.currentState.validate()) {
-                            print(_store);
-                            _store
-                                .collection('todo')
-                                .add({'title': inputName.text, 'done': 0});
+                            CollectionReference todoRef =
+                                _firestore.collection('todo');
+                            await todoRef.document(_id.toString()).setData({
+                              '_id': _id,
+                              'title': inputName.text,
+                              'done': 0,
+                            });
                             Navigator.pop(context);
+
+                            // QuerySnapshot _myDoc = await _firestore
+                            //     .collection('todo')
+                            //     .getDocuments();
+                            // List<DocumentSnapshot> _myDocCount =
+                            //     _myDoc.documents;
+                            // CollectionReference todoRef =
+                            //     _firestore.collection('todo');
+                            // var num = _myDocCount.length + 1;
+                            // String _id = num.toString();
+                            // await todoRef.document(_id).setData({
+                            //   '_id': int.parse(_id),
+                            //   'title': inputName.text,
+                            //   'done': 0
+                            // });
+                            // Navigator.pop(context);
                           }
                         },
                       ),
