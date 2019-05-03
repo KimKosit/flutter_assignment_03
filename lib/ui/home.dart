@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:async';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class TodoScreen extends StatefulWidget {
   @override
@@ -25,6 +25,11 @@ class TodoScreenState extends State {
       IconButton(
         icon: Icon(Icons.delete),
         onPressed: () async {
+          Fluttertoast.showToast(
+            msg: "Deleted!",
+            backgroundColor: Color(0xfff0f0f0),
+            textColor: Colors.black,
+          );
           return _firestore
               .collection('todo')
               .where('done', isEqualTo: 1)
@@ -96,6 +101,11 @@ class TodoScreenState extends State {
                     title: Text(name),
                     value: done,
                     onChanged: (bool check) {
+                      Fluttertoast.showToast(
+                        msg: "Todo Finished",
+                        backgroundColor: Color(0xfff0f0f0),
+                        textColor: Colors.black,
+                      );
                       setState(() {
                         _firestore
                             .collection('todo')
