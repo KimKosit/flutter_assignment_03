@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 int _id = 0;
 int max_id = 0;
@@ -76,11 +75,6 @@ class AddSubjectState extends State<AddSubject> {
                               'title': inputName.text,
                               'done': 0,
                             });
-                            Fluttertoast.showToast(
-                              msg: "Todo Added!",
-                              backgroundColor: Color(0xfff0f0f0),
-                              textColor: Colors.black,
-                            );
                             Navigator.pop(context);
 
                             // QuerySnapshot _myDoc = await _firestore
