@@ -43,7 +43,6 @@ class AddSubjectState extends State<AddSubject> {
                       child: RaisedButton(
                         child: Text("Save"),
                         onPressed: () async {
-                          _id += 1;
                           if (_formkey.currentState.validate()) {
                             CollectionReference todoRef =
                                 _firestore.collection('todo');
@@ -53,6 +52,7 @@ class AddSubjectState extends State<AddSubject> {
                             List<DocumentSnapshot> _myDocCount =
                                 _myDoc.documents;
                             int check = _myDocCount.length;
+                            _id += 1;
                             if (check != 0) {
                               if (_id != 1) {
                                 _myDoc.documents.forEach((doc) {
